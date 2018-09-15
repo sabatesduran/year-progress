@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import DateFNS from "date-fns";
+import { getYear, getDaysInYear, getDayOfYear } from "date-fns";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -14,14 +14,12 @@ const Title = styled.h1`
 `;
 
 function App() {
-  const getYear = date => DateFNS.getYear(date);
-
   const daysInCurrentYear = date => {
-    return DateFNS.getDaysInYear(date);
+    return getDaysInYear(date);
   };
 
   const currentDayInCurrentYear = date => {
-    return DateFNS.getDayOfYear(date);
+    return getDayOfYear(date);
   };
 
   const calculateYearPercentage = (yearDay, daysInYear) => {
