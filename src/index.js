@@ -4,13 +4,29 @@ import { getYear, getDaysInYear, getDayOfYear } from "date-fns";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   font-family: sans-serif;
-  text-align: center;
   color: #303030;
 `;
 const Title = styled.h1`
   color: #303030;
   text-decoration: underline;
+`;
+
+const ProgressBar = styled.div`
+  display: flex;
+  justify-content: space-between;
+  max-width: 50%;
+`;
+
+const Bar = styled.div.attrs({
+  background: props => (props.active ? "#000" : "rgba(0, 0, 0, 0.5)")
+})`
+  width: 5px;
+  height: 30px;
+  background-color: ${props => props.background};
 `;
 
 function App() {
@@ -24,6 +40,14 @@ function App() {
 
   const calculateYearPercentage = (yearDay, daysInYear) => {
     return parseInt((yearDay * 100) / daysInYear, 0);
+  };
+
+  const generateBars = percentage => {
+    let bars = [];
+    for (let i = 0; i < 100; i++) {
+      bars.push(<Bar key={i} active={i < percentage} />);
+    }
+    return bars;
   };
 
   let currentDate = new Date();
@@ -41,6 +65,7 @@ function App() {
       <h2>
         You are in the {yearPercentage} % of {year}
       </h2>
+      <ProgressBar>{generateBars(yearPercentage)}</ProgressBar>
     </Wrapper>
   );
 }
